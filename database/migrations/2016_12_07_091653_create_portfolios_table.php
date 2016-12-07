@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration
+class CreatePortfoliosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +12,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('portfolios', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('infix');
-            $table->string('surname');
-            $table->string('user_level');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('background_color');
+            $table->string('headers_color');
+            $table->string('text_color');
             $table->timestamps();
         });
     }
@@ -34,7 +30,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        Schema::drop('users');
+        Schema::drop('portfolios');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
