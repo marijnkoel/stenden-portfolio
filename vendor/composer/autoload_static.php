@@ -290,12 +290,12 @@ class ComposerStaticInit229c1afe731acd0f62b3ee52c7f64ebd
 
     public static $classMap = array (
         'AddRelationsToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_093029_addRelationsToUsers.php',
-        'CreateCommentsTable' => __DIR__ . '/../..' . '/database/old/2016_12_07_091014_createCommentsTable.php',
-        'CreateModulePortfoliosTable' => __DIR__ . '/../..' . '/database/old/2016_12_07_090513_createModulePortfoliosTable.php',
-        'CreateModulesTable' => __DIR__ . '/../..' . '/database/old/2016_12_07_090232_createModulesTable.php',
+        'CreateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_092322_create_comments_table.php',
+        'CreateModulePortfoliosTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_092022_create_module_portfolios_table.php',
+        'CreateModulesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_091847_create_modules_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePortfoliosTable' => __DIR__ . '/../..' . '/database/old/2016_12_07_085949_createPortfoliosTable.php',
-        'CreateSchoolGroupsTable' => __DIR__ . '/../..' . '/database/old/2016_12_07_085710_createSchoolGroupsTable.php',
+        'CreatePortfoliosTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_091653_create_portfolios_table.php',
+        'CreateSchoolGroupsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_07_091504_create_school_groups_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

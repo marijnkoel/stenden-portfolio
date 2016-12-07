@@ -7,12 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddRelationsToUsers' => $baseDir . '/database/migrations/2016_12_07_093029_addRelationsToUsers.php',
-    'CreateCommentsTable' => $baseDir . '/database/old/2016_12_07_091014_createCommentsTable.php',
-    'CreateModulePortfoliosTable' => $baseDir . '/database/old/2016_12_07_090513_createModulePortfoliosTable.php',
-    'CreateModulesTable' => $baseDir . '/database/old/2016_12_07_090232_createModulesTable.php',
+    'CreateCommentsTable' => $baseDir . '/database/migrations/2016_12_07_092322_create_comments_table.php',
+    'CreateModulePortfoliosTable' => $baseDir . '/database/migrations/2016_12_07_092022_create_module_portfolios_table.php',
+    'CreateModulesTable' => $baseDir . '/database/migrations/2016_12_07_091847_create_modules_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreatePortfoliosTable' => $baseDir . '/database/old/2016_12_07_085949_createPortfoliosTable.php',
-    'CreateSchoolGroupsTable' => $baseDir . '/database/old/2016_12_07_085710_createSchoolGroupsTable.php',
+    'CreatePortfoliosTable' => $baseDir . '/database/migrations/2016_12_07_091653_create_portfolios_table.php',
+    'CreateSchoolGroupsTable' => $baseDir . '/database/migrations/2016_12_07_091504_create_school_groups_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
