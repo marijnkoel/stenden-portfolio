@@ -14,10 +14,10 @@ class CreatePortfoliosTable extends Migration
     {
         Schema::create('portfolios', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('background_color');
-            $table->string('headers_color');
-            $table->string('text_color');
+            $table->float('grade')->nullable();
+            $table->string('background_color')->default("#fff");
+            $table->string('headers_color')->default("#000");
+            $table->string('text_color')->default("#000");
             $table->timestamps();
         });
     }

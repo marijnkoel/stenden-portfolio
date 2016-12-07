@@ -27,17 +27,21 @@
     </div>
 </div>
 <div class="form-group {{ $errors->has('school_group_id') ? 'has-error' : ''}}">
-    {!! Form::label('school_group_id', 'School Group Id', ['class' => 'col-md-4 control-label']) !!}
+    {!! Form::label('school_group_id', 'Klas', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::number('school_group_id', null, ['class' => 'form-control']) !!}
+         @if( count($school_groups) == 0 )
+            Er bestaan nog geen klassen! Maak er eerst wat aan.
+         @else
+         {{
+            Form::select(
+                'school_group_id',
+                $school_groups,
+                null,
+                ['class' => 'form-control'])
+            
+         }}
+         @endif
         {!! $errors->first('school_group_id', '<p class="help-block">:message</p>') !!}
-    </div>
-</div>
-<div class="form-group {{ $errors->has('portfolio_id') ? 'has-error' : ''}}">
-    {!! Form::label('portfolio_id', 'Portfolio Id', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::number('portfolio_id', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('portfolio_id', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">

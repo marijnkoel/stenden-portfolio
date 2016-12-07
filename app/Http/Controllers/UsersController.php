@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Session;
+use App\School_group;
+use App\Portfolio;
 
 class UsersController extends Controller
 {
@@ -18,9 +20,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(25);
+        $data = [
+            'users' => User::paginate(25) 
+        ];
 
-        return view('users.index', compact('users'));
+        return view('users.index', $data);
     }
 
     /**
@@ -30,7 +34,10 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $data = [
+            'school_groups' => School_group::pluck('name','id')
+        ];
+        return view('users.create', $data);
     }
 
     /**
@@ -50,8 +57,14 @@ class UsersController extends Controller
             'user_level' => 'required|numeric'
         ]);
 
+        $requestData['password'] = bcrypt($requestData['password']);
         $requestData = $request->all();
         
+        if ($requestData['user_level'] == 2) {
+            $newPortfolio = Portfolio::create();
+            $requestData['portfolio_id'] = $newPortfolio->id;
+        }
+
         User::create($requestData);
 
         Session::flash('flash_message', 'User added!');

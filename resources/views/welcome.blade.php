@@ -15,7 +15,19 @@
       <div class="navbar2">
         <div class="top-left links">
           <a href="{{ url('/home') }}">Home</a>
-          <a href="{{ url('/portfolio') }}">Portfolio</a>
+          
+          @if(!Auth::guest())
+            @if( Auth::user()->user_level < 2 )
+              {{-- Docenten en SLB'ers --}}
+              <a href="{{ url('/school_groups') }}">Gebruikers</a>
+              <a href="{{ url('/portfolios') }}">Portfolios</a>
+            @else
+              {{-- Studenten --}}
+              <a href="{{ url('/portfolios/' . Auth::user()->portfolio) }}">Portfolio</a>
+            @endif
+          @endif
+
+          <a href="{{ url('/contact') }}">Contact</a>
         </div>
 
         @if (Auth::guest())
