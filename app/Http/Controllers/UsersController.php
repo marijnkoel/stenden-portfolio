@@ -42,7 +42,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|unique|max:255',
+            'password' => 'required|min:6|max:255',
+            'surname' => 'required|max:255',
+            'user_level' => 'required|numeric'
+        ]);
+
         $requestData = $request->all();
         
         User::create($requestData);
@@ -94,6 +101,21 @@ class UsersController extends Controller
         $requestData = $request->all();
         
         $user = User::findOrFail($id);
+
+        $this->validate($request, [
+            'email' => 'required|max:255|email|unique:users,email,' . $user->id,
+            'name' => 'required|max:255',
+            'password' => 'min:6|max:255',
+            'surname' => 'required|max:255',
+            'user_level' => 'required|numeric'
+        ]);
+
+        if (empty($requestData['password'])) {
+            unset($requestData['password']);
+        } else {
+            $requestData['password'] = bcrypt($requestData['password']);
+        }
+
         $user->update($requestData);
 
         Session::flash('flash_message', 'User updated!');
