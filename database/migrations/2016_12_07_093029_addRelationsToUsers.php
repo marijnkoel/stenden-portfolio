@@ -14,9 +14,9 @@ class AddRelationsToUsers extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->integer('school_group_id')->unsigned();
+            $table->integer('school_group_id')->unsigned()->nullable();
             $table->foreign('school_group_id')->references('id')->on('school_groups');            
-            $table->integer('portfolio_id')->unsigned();
+            $table->integer('portfolio_id')->unsigned()->nullable();
             $table->foreign('portfolio_id')->references('id')->on('portfolios');            
         });
     }

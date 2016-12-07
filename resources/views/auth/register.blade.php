@@ -24,6 +24,36 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="infix" class="col-md-4 control-label">infix</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="infix" value="{{ old('name') }}" required autofocus>
+
+                                @if ($errors->has('infix'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('infix') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <label for="surname" class="col-md-4 control-label">surname</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="surname" value="{{ old('name') }}" required autofocus>
+
+                                @if ($errors->has('surname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('surname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
