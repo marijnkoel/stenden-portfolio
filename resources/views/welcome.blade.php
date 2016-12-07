@@ -17,13 +17,27 @@
           <a href="{{ url('/home') }}">Home</a>
           <a href="{{ url('/portfolio') }}">Portfolio</a>
         </div>
-        @if (Route::has('login'))
-        <div class="top-right links">
-          <a href="{{ url('/login') }}">Login</a>
-          <a href="{{ url('/register') }}">Register</a>
-        </div>
-      </div>
+
+        @if (Auth::guest())
+          <div class="top-right links">
+            <a href="{{ url('/login') }}">Login</a>
+            <a href="{{ url('/register') }}">Register</a>
+          </div>
+        @else
+          <div class="top-right links">
+            <a>{{ Auth::user()->name }}</a>
+            <a href="{{ url('/logout') }}"
+                    onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                    Uitloggen
+            </a>
+            
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+            </form>
+          </div>
         @endif
+      </div>
       <!-- einde navbar -->
       <!-- content -->
       <div class="content2">
