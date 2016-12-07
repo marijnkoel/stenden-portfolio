@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'surname' => "tator",
             'user_level' => 0,
             'email' => "admin@stenden.nl",
-            'password' => bcrypt('12456'),
+            'password' => bcrypt('123456'),
         ]);
     }
 }
