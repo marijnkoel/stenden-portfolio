@@ -6,7 +6,12 @@
 
 @section('content')
 <div class="container">
-    <h3> Klassen <a class="btn btn-default pull-right" href="{{ url('school_groups/create') }}" role="button">Nieuwe klas</a> </h3>
+    <h3> Klassen 
+    <div class="btn-group pull-right">
+        <a class="btn btn-default" href="{{ url('users/create') }}" role="button">Nieuwe Gebruiker</a>
+        <a class="btn btn-default" href="{{ url('school_groups/create') }}" role="button">Nieuwe klas</a>
+    </div>
+    </h3>
     @if(count($school_groups ) < 1)
         <div class="alert alert-info">
             Er bestaan nog geen klassen!

@@ -59,7 +59,7 @@ class School_groupsController extends Controller
 
         Session::flash('flash_message', 'School_group added!');
 
-        return redirect('school_groups');
+        return redirect('users');
     }
 
     /**
