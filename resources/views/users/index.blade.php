@@ -1,54 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.base')
+
+@section('title')
+    Gebruikers
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Users</div>
-                    <div class="panel-body">
-
-                        <a href="{{ url('/users/create') }}" class="btn btn-primary btn-xs" title="Add New User"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
-                        <br/>
-                        <br/>
-                        <div class="table-responsive">
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th><th> Name </th><th> Infix </th><th> User Level </th><th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($users as $item)
-                                    <tr>
-                                        <td>{{ $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->infix }}</td><td>{{ $item->user_level }}</td>
-                                        <td>
-                                            <a href="{{ url('/users/' . $item->id) }}" class="btn btn-success btn-xs" title="View User"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                                            <a href="{{ url('/users/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit User"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-                                            {!! Form::open([
-                                                'method'=>'DELETE',
-                                                'url' => ['/users', $item->id],
-                                                'style' => 'display:inline'
-                                            ]) !!}
-                                                {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete User" />', array(
-                                                        'type' => 'submit',
-                                                        'class' => 'btn btn-danger btn-xs',
-                                                        'title' => 'Delete User',
-                                                        'onclick'=>'return confirm("Confirm delete?")'
-                                                )) !!}
-                                            {!! Form::close() !!}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            <div class="pagination-wrapper"> {!! $users->render() !!} </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <h3> Klassen <a class="btn btn-default pull-right" href="{{ url('school_groups/create') }}" role="button">Nieuwe klas</a> </h3>
+    @if(count($school_groups ) < 1)
+        <div class="alert alert-info">
+            Er bestaan nog geen klassen!
         </div>
+    @endif
+
+    <div class="user-list">
+        {{-- Laat alle klassen zien --}}
+        @foreach($school_groups as $school_group)
+            <a href="{{ url('school_group/' . $school_group->id . '/users') }}">  {{$school_group->name}} </a>
+        @endforeach
     </div>
+
+    <h3> Docenten en SLB'ers </h3>
+    <div class="user-list">
+        {{-- Laat alle docenten en SLB'ers zien --}}
+        @foreach($users as $user)
+           <a href="{{ url('users/' . $user->id) }}"> {{$user->name}} {{$user->infix}} {{$user->surname}} </a>
+        @endforeach
+    </div>
+</div>
 @endsection

@@ -12,12 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::get('/school_group/{school_group}/users', 'School_groupsController@users');
 
 Route::resource('school_groups', 'School_groupsController');
 Route::resource('portfolios', 'PortfoliosController');

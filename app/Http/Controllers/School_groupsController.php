@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\School_group;
+use App\User;
 use Illuminate\Http\Request;
 use Session;
 
@@ -21,6 +22,15 @@ class School_groupsController extends Controller
         $school_groups = School_group::paginate(25);
 
         return view('school_groups.index', compact('school_groups'));
+    }
+
+    public function users($id){
+        $data = [
+            'school_group' => School_group::findOrFail($id),
+            'users' => User::whereHas('school_group')->where('id', '=', 1)->get(),
+        ];       
+
+        return view('school_groups.users', $data);
     }
 
     /**

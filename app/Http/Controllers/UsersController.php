@@ -21,7 +21,9 @@ class UsersController extends Controller
     public function index()
     {
         $data = [
-            'users' => User::paginate(25) 
+            // 'users' => User::paginate(25) 
+            'users' => User::where('user_level','<','2')->get(),
+            'school_groups' => School_group::all()
         ];
 
         return view('users.index', $data);
