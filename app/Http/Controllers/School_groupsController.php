@@ -27,7 +27,7 @@ class School_groupsController extends Controller
     public function users($id){
         $data = [
             'school_group' => School_group::findOrFail($id),
-            'users' => User::whereHas('school_group')->where('id', '=', 1)->get(),
+            'users' => User::whereHas('school_group')->where('school_group_id', '=', $id)->get(),
         ];       
 
         return view('school_groups.users', $data);

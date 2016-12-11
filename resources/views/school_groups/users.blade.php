@@ -14,7 +14,7 @@
 	@endif
 	<div class="user-list">
 		@foreach($users as $user)
-			<a href="{{ url('user/' . $user->id ) }}"> {{$user->name}} </a>
+			<a href="{{ url('users/' . $user->id ) }}"> {{$user->name}} {{$user->infix}} {{$user->surname}} </a>
 		@endforeach
 	</div>
 </div>

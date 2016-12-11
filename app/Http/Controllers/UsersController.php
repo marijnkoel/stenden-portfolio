@@ -35,9 +35,16 @@ class UsersController extends Controller
      * @return \Illuminate\View\View
      */
     public function create()
-    {
+    {   
+        $user_levels = [
+            0 => 'SLB\'er',
+            1 => 'Docent',
+            2 => 'Student'
+        ];
+
         $data = [
-            'school_groups' => School_group::pluck('name','id')
+            'school_groups' => School_group::pluck('name','id'),
+            'user_levels' => $user_levels
         ];
         return view('users.create', $data);
     }
@@ -51,9 +58,10 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        $requestData = $request->all();
         $this->validate($request, [
             'name' => 'required|max:255',
-            'email' => 'required|unique|max:255',
+            'email' => 'required|unique:users|max:255',
             'password' => 'required|min:6|max:255',
             'surname' => 'required|max:255',
             'user_level' => 'required|numeric'
@@ -118,7 +126,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'email' => 'required|max:255|email|unique:users,email,' . $user->id,
+            'email' => 'required|max:255|email|unique:users,email,' . $user->email,
             'name' => 'required|max:255',
             'password' => 'min:6|max:255',
             'surname' => 'required|max:255',
