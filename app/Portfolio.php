@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Portfolio extends Model
 {
+    public function user(){
+        return $this->hasOne('App\User', 'portfolio_id', 'id');
+    }
     /**
      * The database table used by the model.
      *

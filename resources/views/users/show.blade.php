@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts.base')
+
+@section('title')  
+    {{$user->name}} {{$user->infix}} {{$user->surname}}
+@endsection
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">User {{ $user->id }}</div>
-                    <div class="panel-body">
 
+        <h3> {{$user->name}} {{$user->infix}} {{$user->surname}} </h3>
                         <a href="{{ url('users/' . $user->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit User"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
@@ -27,17 +27,14 @@
                         <div class="table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $user->id }}</td>
-                                    </tr>
-                                    <tr><th> Name </th><td> {{ $user->name }} </td></tr><tr><th> Infix </th><td> {{ $user->infix }} </td></tr><tr><th> User Level </th><td> {{ $user->user_level }} </td></tr>
+
+                                    <tr><th> Naam </th><td> {{ $user->name }} {{ $user->infix }} {{ $user->surname }}</td></tr>
+                                    <tr><th> Klas </th><td><a href="{{ url('/school_group/'. $user->school_group->id . '/users') }}">{{ $user->school_group->name }} </a></td></tr>
+                                    <tr><th> Rol </th><td> {{ user_levels()[$user->user_level] }} </td></tr>
+                                    <tr><th> Portfolio </th><td> <a class="btn btn-default" href=" {{ url('portfolios/' . $user->portfolio->id) }} " role="button">Bekijk portfolio</a> </td></tr>
                                 </tbody>
                             </table>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

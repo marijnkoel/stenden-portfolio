@@ -36,11 +36,7 @@ class UsersController extends Controller
      */
     public function create()
     {   
-        $user_levels = [
-            0 => 'SLB\'er',
-            1 => 'Docent',
-            2 => 'Student'
-        ];
+        $user_levels = user_levels();
 
         $data = [
             'school_groups' => School_group::pluck('name','id'),

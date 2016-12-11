@@ -13,6 +13,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\School_group','school_group_id');
     }
 
+    public function portfolio(){
+        return $this->belongsTo('App\Portfolio','portfolio_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

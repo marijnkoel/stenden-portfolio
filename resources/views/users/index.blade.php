@@ -21,7 +21,7 @@
     <div class="user-list">
         {{-- Laat alle klassen zien --}}
         @foreach($school_groups as $school_group)
-            <a href="{{ url('school_group/' . $school_group->id . '/users') }}">  {{$school_group->name}} </a>
+            <a href="{{ url('school_groups/' . $school_group->id . '/users') }}">  {{$school_group->name}} </a>
         @endforeach
     </div>
 

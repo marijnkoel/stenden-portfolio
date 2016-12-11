@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="container">
-	<h3> Studenten </h3>
+	<h3> Studenten <a href="{{ url('school_groups/' . $school_group->id . '/edit') }}" class="btn btn-default pull-right" >Klas bewerken</a></h3>
 	@if(count($users) < 1)
 		<div class="alert alert-warning">
 			Er zitten nog geen studenten in deze klas!

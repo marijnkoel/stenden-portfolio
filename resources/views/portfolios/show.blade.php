@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+{{-- 
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -39,5 +37,31 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title> {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} </title>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="{{{ asset('/css/style.css') }}}" rel="stylesheet">
+    <style type="text/css">
+        body{
+            background: {{ $portfolio->background_color }};
+            color: {{ $portfolio->text_color }};
+        }    
+
+        h1, h2, h3, h4, h5, h6{
+            color: {{ $portfolio->headers_color }};
+        }
+    </style>
+</head>
+<body>
+    @include('layouts.nav')
+    <div class="container">
+        <h1> Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} </h1>  
     </div>
-@endsection
+</body>
+</html>
