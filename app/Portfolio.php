@@ -9,6 +9,11 @@ class Portfolio extends Model
     public function user(){
         return $this->hasOne('App\User', 'portfolio_id', 'id');
     }
+
+    public function modules(){
+        return $this->belongsToMany('App\Module','module_portfolios');
+    }
+
     /**
      * The database table used by the model.
      *

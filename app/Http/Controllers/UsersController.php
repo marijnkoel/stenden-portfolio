@@ -67,8 +67,12 @@ class UsersController extends Controller
         $requestData = $request->all();
         
         if ($requestData['user_level'] == 2) {
+            // Maak nieuwe portfolio voor gebruiker
             $newPortfolio = Portfolio::create();
             $requestData['portfolio_id'] = $newPortfolio->id;
+        } else {
+            // Voorkom dat een docent of SLB'er aan een groep wordt toegevoegd
+            unset($requestData['school_group_id']);
         }
 
         User::create($requestData);

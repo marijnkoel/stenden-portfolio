@@ -98,7 +98,7 @@ class PortfoliosController extends Controller
 
         Session::flash('flash_message', 'Portfolio updated!');
 
-        return redirect('portfolios');
+        return redirect('portfolios/' . $portfolio->id);
     }
 
     /**

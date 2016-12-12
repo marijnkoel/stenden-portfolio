@@ -1,4 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.base')
+
+@section('title')
+    Portfolio bewerken
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/css/bootstrap-colorpicker.css" />
+@endsection
 
 @section('content')
     <div class="container">
@@ -32,4 +40,11 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.3.6/js/bootstrap-colorpicker.min.js"></script>
+    <script type="text/javascript">
+        $('.colorpicker-component').colorpicker();
+    </script>
 @endsection
