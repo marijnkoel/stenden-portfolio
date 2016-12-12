@@ -21,7 +21,12 @@
     <div class="user-list">
         {{-- Laat alle klassen zien --}}
         @foreach($school_groups as $school_group)
-            <a href="{{ url('school_groups/' . $school_group->id . '/users') }}">  {{$school_group->name}} </a>
+            <div class="btn-group">
+                <a class="btn btn-default" href="{{ url('school_groups/' . $school_group->id . '/users') }}" role="button">{{$school_group->name}} </a>
+                @if(Auth::user()->user_level < 2)
+                    <a class="btn btn-default" href="{{ url('school_groups/' . $school_group->id )}}" role="button"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                @endif
+            </div>
         @endforeach
     </div>
 

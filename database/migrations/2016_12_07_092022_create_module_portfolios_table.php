@@ -14,6 +14,7 @@ class CreateModulePortfoliosTable extends Migration
     {
         Schema::create('module_portfolios', function(Blueprint $table) {
             $table->increments('id');
+            $table->float('grade')->nullable();
             $table->integer('portfolio_id')->unsigned();
             $table->foreign('portfolio_id')->references('id')->on('portfolios');
             $table->integer('module_id')->unsigned();

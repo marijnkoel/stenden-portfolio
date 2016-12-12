@@ -21,3 +21,24 @@
     {!! Form::close() !!}
 </div>
 @endsection
+
+
+@section('script')
+    <script> 
+        $(window).load(function() {
+            if ($('#user_level').val() != 2) {
+                $('#school_group_id_form_group').hide();
+            } else {
+                $('#school_group_id_form_group').show();
+            }
+        });
+        
+        $('#user_level').change(function(event) {
+            if ($(this).val() != 2) {
+                $('#school_group_id_form_group').hide();
+            } else {
+                $('#school_group_id_form_group').show();
+            }
+        });
+    </script>
+@endsection

@@ -33,7 +33,7 @@
         {!! $errors->first('user_level', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<div class="form-group {{ $errors->has('school_group_id') ? 'has-error' : ''}}">
+<div id="school_group_id_form_group" class="form-group {{ $errors->has('school_group_id') ? 'has-error' : ''}}">
     {!! Form::label('school_group_id', 'Klas', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
          @if( count($school_groups) == 0 )
@@ -61,7 +61,7 @@
 <div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
     {!! Form::label('password', 'Wachtwoord', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
-        {!! Form::password('password', null, ['class' => 'form-control']) !!}
+        {!! Form::password('password', ['class' => 'form-control']) !!}
         {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
