@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/school_groups/{school_group}/users', 'School_groupsController@users');
 
 Route::post('/modules/{module}/approve','ModulesController@approve');
+Route::post('/modules/{module}/grade','ModulesController@grade');
 
 Route::resource('school_groups', 'School_groupsController');
 Route::resource('portfolios', 'PortfoliosController');

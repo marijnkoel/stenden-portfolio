@@ -1,3 +1,6 @@
+#grade_input,#grade{
+  width: 150px;
+}
 html, body {
     background-color: #fff;
     color: #636b6f;

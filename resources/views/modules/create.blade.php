@@ -39,6 +39,7 @@
         if ($('#type').val() == 0) {
             // Text    
             $('#path_form_group').hide();
+            $('#description_form_group').show();
             $('#url_form_group').hide();
 
             $('#description_form_group').show();

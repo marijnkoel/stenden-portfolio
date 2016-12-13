@@ -83,9 +83,12 @@ class ModulesController extends Controller
      */
     public function edit($id)
     {
-        $module = Module::findOrFail($id);
-
-        return view('modules.edit', compact('module'));
+        $data = [
+            'module_types' => module_types(),
+            'module' => Module::findOrFail($id)
+        ];
+        
+        return view('modules.edit', $data);
     }
 
     /**
@@ -129,6 +132,14 @@ class ModulesController extends Controller
         $module = Module::findOrFail($id);
         $module->approved = !$module->approved;
         $module->save();
-        echo 'ok';
+        echo $module->approved ? 1 : 0;
+    }
+
+    public function grade($id, Request $request){
+        $module = Module::findOrFail($id);
+        $grade = $request->all()['grade'] == 'null' ? null : $request->all()['grade'];
+        $module->grade = $grade;
+        $module->save();
+        echo $module->grade;
     }
 }
