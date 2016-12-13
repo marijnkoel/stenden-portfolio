@@ -53,6 +53,8 @@ class ModulesController extends Controller
         $requestData = $request->all();
         $requestData['portfolio_id'] = User::find(Auth::user()->id)->portfolio->id;
 
+        $file = request->('')
+
         $module = Module::create($requestData);
 
         Session::flash('flash_message', 'Module added!');
