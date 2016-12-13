@@ -62,7 +62,7 @@
 
     @php 
         // Voorkomt dat gasten, docenten en SLB'ers het portfolio aan kunnen passen
-        $portfolioOwner = !Auth::guest() || Auth::user()->user_level > 2;
+        $portfolioOwner = !Auth::guest() && Auth::user()->user_level > 1;
         // $portfolioOwner = True;
         $teacher = !Auth::guest() && Auth::user()->user_level < 2;
     @endphp
@@ -82,7 +82,47 @@
         </h1>  
         <hr>
         @foreach($portfolio->modules as $module)
-            {!! render_module($module) !!}
+            @if((Auth::guest() && $module->approved) || !Auth::guest())
+                @php
+                    $grade = empty($module->grade) ? "<em> Geen cijfer </em>" : $module->grade;
+                    $approved = $module->approved ? '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>';
+                @endphp
+
+                @if($module->type == 0)
+                    <div>
+                        <h3> 
+                            {{$module->title}}
+                            @if($portfolioOwner)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default" href="#" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default" href="#" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id . '/edit') }}" role="button">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/modules', $module->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    <button onclick="return confirm('Confirm delete?')" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
+
+                            @if($teacher)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default" href="#" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default" href="#" role="button">{!! $approved !!}</a>
+                                </div>
+                            @endif
+                        </h3>
+                        <p > {{$module->description}} </p>
+                    </div>
+                @endif
+            @endif
         @endforeach
     </div>
 </body>

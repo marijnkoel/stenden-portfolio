@@ -17,6 +17,9 @@ class CreateModulesTable extends Migration
             $table->string('name');
             $table->boolean('slb');
             $table->integer('type');
+            $table->float('grade')->nullable();
+            $table->integer('portfolio_id')->unsigned();
+            $table->foreign('portfolio_id')->references('id')->on('portfolios');
             $table->boolean('approved')->default(true);
             $table->string('title');
             $table->text('description')->nullable();

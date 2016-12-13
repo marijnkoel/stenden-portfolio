@@ -51,15 +51,9 @@ class ModulesController extends Controller
     {
         
         $requestData = $request->all();
+        $requestData['portfolio_id'] = User::find(Auth::user()->id)->portfolio->id;
 
         $module = Module::create($requestData);
-
-        $data = [
-            'portfolio_id' => User::find(Auth::user()->id)->portfolio->id,
-            'module_id' =>  $module->id
-        ];
-
-        Module_portfolio::create($data);
 
         Session::flash('flash_message', 'Module added!');
 
@@ -106,13 +100,13 @@ class ModulesController extends Controller
     {
         
         $requestData = $request->all();
-        
+        $requestData['portfolio_id'] = User::find(Auth::user()->id)->portfolio->id;
         $module = Module::findOrFail($id);
         $module->update($requestData);
 
         Session::flash('flash_message', 'Module updated!');
 
-        return redirect('modules');
+        return redirect('portfolios/' . User::find(Auth::user()->id)->portfolio->id);
     }
 
     /**
@@ -128,6 +122,13 @@ class ModulesController extends Controller
 
         Session::flash('flash_message', 'Module deleted!');
 
-        return redirect('modules');
+        return redirect('portfolios/' . User::find(Auth::user()->id)->portfolio->id);
+    }
+
+    public function approve($id){
+        $module = Module::findOrFail($id);
+        $module->approved = !$module->approved;
+        $module->save();
+        echo 'ok';
     }
 }

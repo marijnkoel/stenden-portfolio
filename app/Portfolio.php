@@ -11,7 +11,7 @@ class Portfolio extends Model
     }
 
     public function modules(){
-        return $this->belongsToMany('App\Module','module_portfolios');
+        return $this->hasMany('App\Module','portfolio_id');
     }
 
     /**

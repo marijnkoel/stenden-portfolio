@@ -25,7 +25,7 @@ class Module extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slb', 'type', 'approved', 'title', 'description', 'path', 'url'];
+    protected $fillable = ['name', 'slb', 'type', 'approved', 'title', 'description', 'path', 'url','grade','portfolio_id'];
 
     
 }
