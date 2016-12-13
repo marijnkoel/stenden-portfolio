@@ -36,11 +36,10 @@ class UsersController extends Controller
      */
     public function create()
     {   
-        $user_levels = user_levels();
 
         $data = [
             'school_groups' => School_group::pluck('name','id'),
-            'user_levels' => $user_levels
+            'user_levels' => user_levels()
         ];
         return view('users.create', $data);
     }
@@ -64,7 +63,6 @@ class UsersController extends Controller
         ]);
 
         $requestData['password'] = bcrypt($requestData['password']);
-        $requestData = $request->all();
         
         if ($requestData['user_level'] == 2) {
             // Maak nieuwe portfolio voor gebruiker
@@ -105,9 +103,14 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
 
-        return view('users.edit', compact('user'));
+        $data = [
+            'school_groups' => School_group::pluck('name','id'),
+            'user_levels' => user_levels(),
+            'user' => User::findOrFail($id)
+        ];
+
+        return view('users.edit', $data);
     }
 
     /**
@@ -126,7 +129,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         $this->validate($request, [
-            'email' => 'required|max:255|email|unique:users,email,' . $user->email,
+            'email' => 'required|max:255|email|unique:users,email,' . $user->id,
             'name' => 'required|max:255',
             'password' => 'min:6|max:255',
             'surname' => 'required|max:255',

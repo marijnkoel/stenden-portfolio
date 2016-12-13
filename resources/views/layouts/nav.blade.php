@@ -11,7 +11,7 @@
               <a href="{{ url('/portfolios') }}">Portfolios</a>
             @else
               {{-- Studenten --}}
-              <a href="{{ url('/portfolios/' . Auth::user()->portfolio) }}">Portfolio</a>
+              <a href="{{ url('/portfolios/' . Auth::user()->portfolio->id) }}">Portfolio</a>
             @endif
           @endif
 

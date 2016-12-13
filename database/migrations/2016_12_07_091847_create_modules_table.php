@@ -17,9 +17,9 @@ class CreateModulesTable extends Migration
             $table->string('name');
             $table->boolean('slb');
             $table->integer('type');
-            $table->boolean('approved');
+            $table->boolean('approved')->default(true);
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('path')->nullable();
             $table->string('url')->nullable();
             $table->timestamps();

@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use App\Module;
+use App\Module_portfolio;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class ModulesController extends Controller
 {
@@ -30,7 +33,11 @@ class ModulesController extends Controller
      */
     public function create()
     {
-        return view('modules.create');
+        $data = [
+            'module_types' => module_types()
+        ];
+        
+        return view('modules.create',$data);
     }
 
     /**
@@ -44,12 +51,19 @@ class ModulesController extends Controller
     {
         
         $requestData = $request->all();
-        
-        Module::create($requestData);
+
+        $module = Module::create($requestData);
+
+        $data = [
+            'portfolio_id' => User::find(Auth::user()->id)->portfolio->id,
+            'module_id' =>  $module->id
+        ];
+
+        Module_portfolio::create($data);
 
         Session::flash('flash_message', 'Module added!');
 
-        return redirect('modules');
+        return redirect('portfolios/' . User::find(Auth::user()->id)->portfolio->id);
     }
 
     /**

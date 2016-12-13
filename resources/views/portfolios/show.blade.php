@@ -59,10 +59,11 @@
     </style>
 </head>
 <body>
+
     @php 
         // Voorkomt dat gasten, docenten en SLB'ers het portfolio aan kunnen passen
-        // $portfolioOwner = Auth::guest() || Auth::user()->user_level > 2;
-        $portfolioOwner = True;
+        $portfolioOwner = !Auth::guest() || Auth::user()->user_level > 2;
+        // $portfolioOwner = True;
         $teacher = !Auth::guest() && Auth::user()->user_level < 2;
     @endphp
     @include('layouts.nav')
@@ -71,7 +72,7 @@
             Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} 
             @if($portfolioOwner)
                 <div class="btn-group pull-right">
-                    <a class="btn btn-default" href="#" role="button">Module toevoegen</a>
+                    <a class="btn btn-default" href="{{ url('modules/create') }}" role="button">Module toevoegen</a>
                     <a class="btn btn-default " href="{{ url('portfolios/' . $portfolio->id . '/edit') }}" role="button">
                         Instellingen
                     </a>
@@ -81,7 +82,7 @@
         </h1>  
         <hr>
         @foreach($portfolio->modules as $module)
-            {{ $module }}
+            {!! render_module($module) !!}
         @endforeach
     </div>
 </body>
