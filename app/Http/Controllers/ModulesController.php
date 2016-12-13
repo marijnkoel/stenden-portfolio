@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\Module;
+use App\Portfolio;
 use App\Module_portfolio;
 use Illuminate\Http\Request;
 use Session;
@@ -52,10 +53,17 @@ class ModulesController extends Controller
         
         $requestData = $request->all();
         $requestData['portfolio_id'] = User::find(Auth::user()->id)->portfolio->id;
-
-        $file = request->('')
-
         $module = Module::create($requestData);
+
+        if ($request->hasFile('bestand') && $request->file('bestand')->isValid()) {
+            $destinationPath = public_path('uploads');
+            $file = $request->file('bestand');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $module->id.'.'.$extension;
+            $file->move($destinationPath, $fileName);
+            $module->path = "uploads/" . $fileName;
+            $module->save();
+        }
 
         Session::flash('flash_message', 'Module added!');
 
@@ -143,5 +151,13 @@ class ModulesController extends Controller
         $module->grade = $grade;
         $module->save();
         echo $module->grade;
+    }
+
+    public function gradeportfolio($id, Request $request){
+        $portfolio = Portfolio::findOrFail($id);
+        $grade = $request->all()['grade'] == 'null' ? null : $request->all()['grade'];
+        $portfolio->grade = $grade;
+        $portfolio->save();
+        echo $portfolio->grade;
     }
 }

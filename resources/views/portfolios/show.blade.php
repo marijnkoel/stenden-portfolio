@@ -15,6 +15,12 @@
         h1, h2, h3, h4, h5, h6{
             color: {{ $portfolio->headers_color }};
         }
+
+        @if(Auth::guest())
+            .navbar2{
+                display: none;
+            }
+        @endif
     </style>
 </head>
 <body>
@@ -27,17 +33,25 @@
     @endphp
     @include('layouts.nav')
     <div class="container">
+        @php
+            $portfolioGrade = empty($portfolio->grade) ? "<em> Geen cijfer </em>" : $portfolio->grade;
+        @endphp
         <h1> 
             Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} 
             @if($portfolioOwner)
                 <div class="btn-group pull-right">
-                    <a class="btn btn-default"  role="button"> <em> Geen cijfer </em> </a>
+                    <a class="grade btn btn-default"  role="button"> {{$portfolioGrade}} </a>
                     <a class="btn btn-default" href="{{ url('modules/create') }}" role="button">Module toevoegen</a>
                     <a class="btn btn-default " href="{{ url('portfolios/' . $portfolio->id . '/edit') }}" role="button">
                         Instellingen
                     </a>
                 </div>
+            @endif
 
+            @if($teacher)
+                <div class="btn-group pull-right">
+                    <a class="grade btn btn-default" id="portfolio-grade" data-id="{{$portfolio->id}}" data-grade="{{$portfolio->grade}}"  role="button"> {{$portfolioGrade}} </a>
+                </div>
             @endif
         </h1>  
         <hr>
@@ -54,8 +68,8 @@
                             {{$module->title}}
                             @if($portfolioOwner)
                                 <div class="btn-group pull-right">
-                                    <a class="btn btn-default" role="button"> {!! $grade !!} </a>
-                                    <a class="btn btn-default" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" role="button">{!! $approved !!}</a>
                                     <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                     </a>
@@ -74,13 +88,125 @@
 
                             @if($teacher)
                                 <div class="btn-group  pull-right">
-                                    <a class="btn btn-default" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
-                                    <a class="btn btn-default" id="approved" onclick="approve({{$module->id}})"  role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default grade" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" id="approved" onclick="approve({{$module->id}}, this)"  role="button">{!! $approved !!}</a>
                                 </div>
                             @endif
                         </h3>
                         <p > {!!$module->description!!} </p>
                     </div>
+                    <hr>
+                @elseif($module->type == 1)
+                    <div>
+                        <h3> 
+                            Bestand: {{$module->title}}
+                            @if($portfolioOwner)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id . '/edit') }}" role="button">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/modules', $module->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    <button onclick="return confirm('Confirm delete?')" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
+
+                            @if($teacher)
+                                <div class="btn-group  pull-right">
+                                    <a class="btn btn-default grade" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" id="approved" onclick="approve({{$module->id}}, this)"  role="button">{!! $approved !!}</a>
+                                </div>
+                            @endif
+                        </h3>
+                        <p>
+                            <a class="btn btn-default" href="{{ url($module->path) }}" role="button">Download bestand</a>
+                        </p>
+                    </div>
+                    <hr>
+                @elseif($module->type == 2)
+                    <div>
+                        <h3> 
+                            {{$module->title}} 
+                            <small> Klik om te bekijken </small>
+                            @if($portfolioOwner)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id . '/edit') }}" role="button">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/modules', $module->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    <button onclick="return confirm('Confirm delete?')" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
+
+                            @if($teacher)
+                                <div class="btn-group  pull-right">
+                                    <a class="btn btn-default grade" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" id="approved" onclick="approve({{$module->id}}, this)"  role="button">{!! $approved !!}</a>
+                                </div>
+                            @endif
+                        </h3>
+                        <p class="portfolio-image">
+                            <a href="{{ url($module->path) }}"><img src="{{ url($module->path) }}"></a>
+                        </p>
+                    </div>
+                    <hr>
+                @elseif($module->type == 3)
+                    <div>
+                        <h3> 
+                            {{$module->title}} 
+                            @if($portfolioOwner)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id . '/edit') }}" role="button">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/modules', $module->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    <button onclick="return confirm('Confirm delete?')" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
+
+                            @if($teacher)
+                                <div class="btn-group  pull-right">
+                                    <a class="btn btn-default grade" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" id="approved" onclick="approve({{$module->id}}, this)"  role="button">{!! $approved !!}</a>
+                                </div>
+                            @endif
+                        </h3>
+                        <p>
+                            <video autobuffer autoloop loop controls>
+                                <source src="{{ url($module->path) }}">
+                            </video>
+                        </p>
+                    </div>
+                    <hr>
                 @endif
             @endif
         @endforeach
@@ -91,23 +217,23 @@
     <script>
 
 
-        function approve(id){
+        function approve(id, theElement){
             $.ajax({
                 url:"{{ url('modules/') }}" + "/" + id + "/approve",
                 type:'POST',
                 headers: { 'X-CSRF-Token' : '{{ csrf_token() }}' },
                 success: function(data){
                     if (data == 1) {
-                        $('#approved').html('Goedgekeurd');
+                        $(theElement).html('Goedgekeurd');
                     } else{
-                        $('#approved').html('Niet goedgekeurd');
+                        $(theElement).html('Niet goedgekeurd');
                     }
                 }
             });
         }
 
-        function grade(id,grade = ""){
-            $('#grade').replaceWith('<input type="text" id="grade_input" class="btn btn-default">');
+        function grade(id,grade = "",theElement){
+            $(theElement).replaceWith('<input type="text" id="grade_input" class="btn btn-default grade">');
             $('#grade_input').focus();
             $('#grade_input').focusout(function() {
                 var grade = $('#grade_input').val();
@@ -120,7 +246,7 @@
                         headers: { 'X-CSRF-Token' : '{{ csrf_token() }}' },
                         data: {grade: grade},
                         success: function(data){
-                            $('#grade_input').replaceWith('<a class="btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button"><em>Geen cijfer</em></a>');
+                            $('#grade_input').replaceWith('<a class="btn btn-default grade" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button"><em>Geen cijfer</em></a>');
                         }
                     });
                 } else {
@@ -130,7 +256,7 @@
                         headers: { 'X-CSRF-Token' : '{{ csrf_token() }}' },
                         data: {grade: grade},
                         success: function(data){
-                            $('#grade_input').replaceWith('<a class="btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button">' + grade + '</a>');
+                            $('#grade_input').replaceWith('<a class="grade btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button">' + grade + '</a>');
                         }
                     });   
                 }
@@ -138,8 +264,43 @@
         }
 
         $(document).on('click',"#grade", function(event) {
-            grade($(this).data('id'),$(this).data('grade'));
+            grade($(this).data('id'),$(this).data('grade'), $(this));
         });
+        $(document).on('click',"#portfolio-grade", function(event) {
+            portfolioGrade($(this).data('id'),$(this).data('grade'));
+        });
+
+        function portfolioGrade(id,grade = ""){
+            $('#portfolio-grade').replaceWith('<input type="text" id="grade_input_portfolio" class="btn btn-default grade">');
+            $('#grade_input_portfolio').focus();
+
+            $('#grade_input_portfolio').focusout(function() {
+                var grade = $('#grade_input_portfolio').val();
+
+                if (grade == "" || !$.isNumeric(grade)) {
+                    grade = "null";
+                    $.ajax({
+                        url:"{{ url('modules/') }}" + "/" + id + "/gradeportfolio",
+                        type:'POST',
+                        headers: { 'X-CSRF-Token' : '{{ csrf_token() }}' },
+                        data: {grade: grade},
+                        success: function(data){
+                            $('#grade_input').replaceWith('<a class="btn btn-default grade" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button"><em>Geen cijfer</em></a>');
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url:"{{ url('modules/') }}" + "/" + id + "/gradeportfolio",
+                        type:'POST',
+                        headers: { 'X-CSRF-Token' : '{{ csrf_token() }}' },
+                        data: {grade: grade},
+                        success: function(data){
+                            $('#grade_input').replaceWith('<a class="grade btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button">' + grade + '</a>');
+                        }
+                    });   
+                }
+            })
+        }
     </script>
 @endif
 </body>

@@ -64,12 +64,12 @@
         {!! $errors->first('description', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
-<div id="path_form_group" class="form-group {{ $errors->has('path') ? 'has-error' : ''}}">
-    {!! Form::label('path', 'Path', ['class' => 'col-md-4 control-label']) !!}
+<div id="path_form_group" class="form-group {{ $errors->has('bestand') ? 'has-error' : ''}}">
+    {!! Form::label('bestand', 'Bestand', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {{-- {!! Form::text('path', null, ['class' => 'form-control']) !!} --}}
-        {!! Form::file('path', null, ['class' => 'form-control']) !!}
-        {!! $errors->first('path', '<p class="help-block">:message</p>') !!}
+        {!! Form::file('bestand', null, ['class' => 'form-control']) !!}
+        {!! $errors->first('bestand', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
 <div id="url_form_group" class="form-group {{ $errors->has('url') ? 'has-error' : ''}}">
@@ -86,3 +86,5 @@
         {!! Form::submit(isset($submitButtonText) ? $submitButtonText : 'Create', ['class' => 'btn btn-primary']) !!}
     </div>
 </div>
+
+{{csrf_field()}}

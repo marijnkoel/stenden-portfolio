@@ -1,5 +1,31 @@
-#grade_input,#grade{
+.grade_input,.grade,.approved{
   width: 150px;
+}
+.portfolio-image{
+  max-height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+video{
+  margin:0 auto;
+  display: block;
+  max-width: 100%;
+}
+
+.portfolio-image img{
+  width: 100%;
+  left: 0%;
+  display: block;
+  position: relative;
+  transition: 10s ease all;
+}
+
+.portfolio-image img:hover{
+  width: 200%;
+  left: -50%;
+  top: -50%;
+  transition: 10s ease all;
 }
 html, body {
     background-color: #fff;
