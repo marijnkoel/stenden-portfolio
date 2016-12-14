@@ -207,10 +207,54 @@
                         </p>
                     </div>
                     <hr>
+                @elseif($module->type == 4)
+                    <div>
+                        <h3>
+                            {{$module->title}}
+                            @if($portfolioOwner)
+                                <div class="btn-group pull-right">
+                                    <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" role="button">{!! $approved !!}</a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id) }}" role="button">
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="{{ url('modules/' . $module->id . '/edit') }}" role="button">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                    </a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/modules', $module->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                    <button onclick="return confirm('Confirm delete?')" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                                    {!! Form::close() !!}
+                                </div>
+                            @endif
+
+                            @if($teacher)
+                                <div class="btn-group  pull-right">
+                                    <a class="btn btn-default grade" id="grade"  data-grade="{{$module->grade}}" data-id="{{$module->id}}" role="button">  {!! $grade !!} </a>
+                                    <a class="btn btn-default approved" id="approved" onclick="approve({{$module->id}}, this)"  role="button">{!! $approved !!}</a>
+                                </div>
+                            @endif
+                        </h3>
+                        <p>
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <a href="{{ url($module->path) }}"><img width="100%" src="{{ url($module->path) }}"></a>
+                                </div>
+                                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                    {!!$module->description!!}
+                                </div>
+                            </div>
+                            <small> <a href="{{ $module->url }}" > {{ $module->url }} </a> </small>
+                        </p>
+                    </div>
                 @endif
             @endif
         @endforeach
 
+    @if(!Auth::guest())
         <div id="comments">
         <h3>Reacties</h3>
             @foreach($portfolio->comments as $comment)
@@ -239,8 +283,9 @@
                     </form>
                 </div>
             @endif
+            </div>
         </div>
-    </div>
+    @endif
 @if($teacher)
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
