@@ -3,7 +3,7 @@
       <div class="navbar2">
         <div class="top-left links">
           <a href="{{ url('/') }}">Home</a>
-          
+
           @if(!Auth::guest())
             @if( Auth::user()->user_level < 2 )
               {{-- Docenten en SLB'ers --}}
@@ -31,7 +31,7 @@
                              document.getElementById('logout-form').submit();">
                     Uitloggen
             </a>
-            
+
             <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
             </form>

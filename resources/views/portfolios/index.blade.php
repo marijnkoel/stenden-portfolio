@@ -16,7 +16,7 @@
                  Naam: {{$portfolio->user->name}}<br>
                  Achternaam: {{$portfolio->user->infix}} {{$portfolio->user->surname}}<br>
                  Email: {{$portfolio->user->email}}<br>
-                 
+                 Klas: {{$portfolio->user->School_group->name}}<br>
                </div>
                <div class="flex-center">
                  <a href="{{ url('portfolios/' . $portfolio->id) }}" class="btn btn-portfolio">Bekijk portfolio</a>
