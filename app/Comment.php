@@ -11,6 +11,11 @@ class Comment extends Model
         return $this->belongsTo('App\User','user_id');
     }
 
+    public function portfolio(){
+        return $this->belongsTo('App\Portfolio','portfolio_id');
+    }
+
+
     /**
      * The database table used by the model.
      *

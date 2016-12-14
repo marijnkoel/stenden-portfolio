@@ -259,6 +259,19 @@
         <h3>Reacties</h3>
             @foreach($portfolio->comments as $comment)
                 <div class="comment">
+                {!! Form::open([
+                    'method'=>'DELETE',
+                    'url' => ['/comments', $comment->id],
+                    'style' => 'display:inline',
+                    'class' => 'pull-right'
+                ]) !!}
+                    {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"/>', array(
+                            'type' => 'submit',
+                            'class' => 'btn btn-danger btn-xs',
+                            'title' => 'Delete Module_portfolio',
+                            'onclick'=>'return confirm("Confirm delete?")'
+                    )) !!}
+                {!! Form::close() !!}
                 <p>
                     <strong> {{ $comment->user->name }} </strong>
                     {{ $comment->created_at }}

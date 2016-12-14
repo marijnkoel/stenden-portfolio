@@ -15,20 +15,28 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('portfolios/{portfolio}','PortfoliosController@show');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['auth']], function () {
+	
+		Route::resource('modules', 'ModulesController');
+	Route::group(['middleware' => ['self']], function () {
+		// Self
+		Route::resource('portfolios', 'PortfoliosController',['except' => ['show']]);
+		Route::resource('users', 'UsersController');
+	});
 
-Route::get('/school_groups/{school_group}/users', 'School_groupsController@users');
-
-Route::post('/modules/{module}/approve','ModulesController@approve');
-Route::post('/modules/{module}/grade','ModulesController@grade');
-Route::post('/modules/{module}/gradeportfolio','ModulesController@gradeportfolio');
-Route::post('/portfolios/{portfolio}/comment','PortfoliosController@comment');
-
-Route::resource('school_groups', 'School_groupsController');
-Route::resource('portfolios', 'PortfoliosController');
-Route::resource('modules', 'ModulesController');
-Route::resource('module_portfolios', 'Module_portfoliosController');
-Route::resource('comments', 'CommentsController');
-Route::resource('users', 'UsersController');
+	Route::group(['middleware' => ['admin']], function () {
+		// Admin
+		Route::resource('school_groups', 'School_groupsController');
+		Route::resource('module_portfolios', 'Module_portfoliosController');
+		Route::resource('comments', 'CommentsController');
+		Route::post('/modules/{module}/approve','ModulesController@approve');
+		Route::post('/modules/{module}/grade','ModulesController@grade');
+		Route::post('/modules/{module}/gradeportfolio','ModulesController@gradeportfolio');
+		Route::get('/school_groups/{school_group}/users', 'School_groupsController@users');
+		Route::post('/portfolios/{portfolio}/comment','PortfoliosController@comment');
+	});
+});
