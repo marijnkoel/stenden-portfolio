@@ -7,6 +7,18 @@
   overflow: hidden;
 }
 
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.btn-portfolio{
+  background: #fff;
+  color: black;
+  width: 80%;
+  margin-bottom: 5px;
+}
+
 video{
   margin:0 auto;
   display: block;
@@ -35,6 +47,9 @@ html, body {
     height: 100vh;
     margin: 0;
 }
+h4 {
+    font-size: 18px;
+}
 
 .user-list a{
  display: inline-block;
@@ -48,6 +63,11 @@ html, body {
 .user-list a:hover{
   background: #fbfbfb;
   text-decoration: none;
+}
+.background_color{
+  background: #6dab9e;
+  color: white;
+  margin: 10px;
 }
 
 .full-height {

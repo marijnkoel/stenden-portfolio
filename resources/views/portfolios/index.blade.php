@@ -7,12 +7,24 @@
 @section('content')
     <div class="container">
     <h3> Portfolios </h3>
-        <div class="user-list">
             @foreach($portfolios as $portfolio)
-                <a href="{{ url('portfolios/' . $portfolio->id) }}"> {{$portfolio->user->name}} {{$portfolio->user->infix}} {{$portfolio->user->surname}} </a>
+            <div class="col-md-3 background_color">
+               <div class="flex-center">
+                 <h4>{{$portfolio->user->name}} {{$portfolio->user->infix}} {{$portfolio->user->surname}}</h4><br>
+               </div>
+               <div class="flex-center">
+                 Naam: {{$portfolio->user->name}}<br>
+                 Achternaam: {{$portfolio->user->infix}} {{$portfolio->user->surname}}<br>
+                 Email: {{$portfolio->user->email}}<br>
+                 
+               </div>
+               <div class="flex-center">
+                 <a href="{{ url('portfolios/' . $portfolio->id) }}" class="btn btn-portfolio">Bekijk portfolio</a>
+               </div>
+              </div>
             @endforeach
-        </div>
-{{-- 
+
+{{--
                         <a href="{{ url('/portfolios/create') }}" class="btn btn-primary btn-xs" title="Add New Portfolio"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a>
                         <br/>
                         <br/>
