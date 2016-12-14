@@ -21,7 +21,7 @@ class UsersController extends Controller
     public function index()
     {
         $data = [
-            // 'users' => User::paginate(25) 
+            // 'users' => User::paginate(25)
             'users' => User::where('user_level','<','2')->get(),
             'school_groups' => School_group::all()
         ];
@@ -35,7 +35,7 @@ class UsersController extends Controller
      * @return \Illuminate\View\View
      */
     public function create()
-    {   
+    {
 
         $data = [
             'school_groups' => School_group::pluck('name','id'),
@@ -63,7 +63,7 @@ class UsersController extends Controller
         ]);
 
         $requestData['password'] = bcrypt($requestData['password']);
-        
+
         if ($requestData['user_level'] == 2) {
             // Maak nieuwe portfolio voor gebruiker
             $newPortfolio = Portfolio::create();
@@ -123,9 +123,9 @@ class UsersController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         $user = User::findOrFail($id);
 
         $this->validate($request, [
@@ -158,6 +158,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        $user = User::find($id);
+        $portfolio_id = $user->portfolio->id;
+        $user->portfolio_id = Null;
+        $user->save();
+        Portfolio::destroy($portfolio_id);
         User::destroy($id);
 
         Session::flash('flash_message', 'User deleted!');
