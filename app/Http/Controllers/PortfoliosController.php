@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 
 use App\Portfolio;
 use Illuminate\Http\Request;
+use Auth;
 use Session;
+use App\Comment;
 
 class PortfoliosController extends Controller
 {
@@ -62,7 +64,6 @@ class PortfoliosController extends Controller
     public function show($id)
     {
         $portfolio = Portfolio::findOrFail($id);
-
         return view('portfolios.show', compact('portfolio'));
     }
 
@@ -115,5 +116,14 @@ class PortfoliosController extends Controller
         Session::flash('flash_message', 'Portfolio deleted!');
 
         return redirect('portfolios');
+    }
+
+    public function comment($id, Request $request){
+        $requestData = $request->all();
+        $requestData['portfolio_id'] = $id;
+        $requestData['user_id'] = Auth::user()->id;
+        Comment::create($requestData);
+        Session::flash('flash_message', 'Comment added!');
+        return redirect('portfolios/' . $id);
     }
 }

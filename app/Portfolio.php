@@ -14,6 +14,11 @@ class Portfolio extends Model
         return $this->hasMany('App\Module','portfolio_id');
     }
 
+    public function comments(){
+        return $this->hasMany('App\Comment','portfolio_id');
+    }
+
+
     /**
      * The database table used by the model.
      *

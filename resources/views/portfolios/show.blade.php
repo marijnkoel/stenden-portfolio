@@ -210,10 +210,41 @@
                 @endif
             @endif
         @endforeach
+
+        <div id="comments">
+            @foreach($portfolio->comments as $comment)
+                <div class="comment">
+                    <p>
+                        {!! $comment->comment !!}
+                    </p>
+                    <p>
+                        <strong> {{ $comment->user->name }} </strong>
+                        {{ $comment->created_at }}
+                    </p>
+                </div>
+            @endforeach
+            
+            @if($teacher)
+                <div id="new-comment">
+                    <form action="{{ url('portfolios/' . $portfolio->id . '/comment') }}" method="POST" role="form">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="textarea" class="control-label">Bericht</label>
+                            <textarea name="comment" class="form-control" rows="3"></textarea>
+                        </div>
+                        
+                    
+                        <button type="submit" class="btn btn-primary">Plaatsen</button>
+                    </form>
+                </div>
+            @endif
+        </div>
     </div>
 @if($teacher)
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
     <script>
 
 

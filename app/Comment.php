@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+
+    public function user(){
+        return $this->belongsTo('App\User','user_id');
+    }
+
     /**
      * The database table used by the model.
      *
