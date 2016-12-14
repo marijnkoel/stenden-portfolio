@@ -1,6 +1,6 @@
 @extends('layouts.base')
 
-@section('title')  
+@section('title')
     {{$user->name}} {{$user->infix}} {{$user->surname}}
 @endsection
 
@@ -29,9 +29,11 @@
                                 <tbody>
 
                                     <tr><th> Naam </th><td> {{ $user->name }} {{ $user->infix }} {{ $user->surname }}</td></tr>
+                                    @if($user->user_level == 2)
                                     <tr><th> Klas </th><td><a href="{{ url('/school_group/'. $user->school_group->id . '/users') }}">{{ $user->school_group->name }} </a></td></tr>
-                                    <tr><th> Rol </th><td> {{ user_levels()[$user->user_level] }} </td></tr>
                                     <tr><th> Portfolio </th><td> <a class="btn btn-default" href=" {{ url('portfolios/' . $user->portfolio->id) }} " role="button">Bekijk portfolio</a> </td></tr>
+                                    @endif
+                                    <tr><th> Rol </th><td> {{ user_levels()[$user->user_level] }} </td></tr>
                                 </tbody>
                             </table>
                         </div>

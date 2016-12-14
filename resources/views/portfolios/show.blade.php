@@ -10,7 +10,7 @@
         body{
             background: {{ $portfolio->background_color }};
             color: {{ $portfolio->text_color }};
-        }    
+        }
 
         h1, h2, h3, h4, h5, h6{
             color: {{ $portfolio->headers_color }};
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-    @php 
+    @php
         // Voorkomt dat gasten, docenten en SLB'ers het portfolio aan kunnen passen
         $portfolioOwner = !Auth::guest() && Auth::user()->user_level > 1;
         // $portfolioOwner = True;
@@ -36,8 +36,8 @@
         @php
             $portfolioGrade = empty($portfolio->grade) ? "<em> Geen cijfer </em>" : $portfolio->grade;
         @endphp
-        <h1> 
-            Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} 
+        <h1>
+            Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }}
             @if($portfolioOwner)
                 <div class="btn-group pull-right">
                     <a class="grade btn btn-default"  role="button"> {!! $portfolioGrade !!} </a>
@@ -53,7 +53,7 @@
                     <a class="grade btn btn-default" id="portfolio-grade" data-id="{{$portfolio->id}}" data-grade="{{$portfolio->grade}}"  role="button"> {!! $portfolioGrade !!} </a>
                 </div>
             @endif
-        </h1>  
+        </h1>
         <hr>
         @foreach($portfolio->modules as $module)
             @if((Auth::guest() && $module->approved) || !Auth::guest())
@@ -64,7 +64,7 @@
 
                 @if($module->type == 0)
                     <div>
-                        <h3> 
+                        <h3>
                             {{$module->title}}
                             @if($portfolioOwner)
                                 <div class="btn-group pull-right">
@@ -98,7 +98,7 @@
                     <hr>
                 @elseif($module->type == 1)
                     <div>
-                        <h3> 
+                        <h3>
                             Bestand: {{$module->title}}
                             @if($portfolioOwner)
                                 <div class="btn-group pull-right">
@@ -134,8 +134,8 @@
                     <hr>
                 @elseif($module->type == 2)
                     <div>
-                        <h3> 
-                            {{$module->title}} 
+                        <h3>
+                            {{$module->title}}
                             <small> Klik om te bekijken </small>
                             @if($portfolioOwner)
                                 <div class="btn-group pull-right">
@@ -171,8 +171,8 @@
                     <hr>
                 @elseif($module->type == 3)
                     <div>
-                        <h3> 
-                            {{$module->title}} 
+                        <h3>
+                            {{$module->title}}
                             @if($portfolioOwner)
                                 <div class="btn-group pull-right">
                                     <a class="btn btn-default grade" role="button"> {!! $grade !!} </a>
@@ -212,18 +212,19 @@
         @endforeach
 
         <div id="comments">
+        <h3>Reacties</h3>
             @foreach($portfolio->comments as $comment)
                 <div class="comment">
+                <p>
+                    <strong> {{ $comment->user->name }} </strong>
+                    {{ $comment->created_at }}
+                </p>
                     <p>
                         {!! $comment->comment !!}
                     </p>
-                    <p>
-                        <strong> {{ $comment->user->name }} </strong>
-                        {{ $comment->created_at }}
-                    </p>
                 </div>
             @endforeach
-            
+
             @if($teacher)
                 <div id="new-comment">
                     <form action="{{ url('portfolios/' . $portfolio->id . '/comment') }}" method="POST" role="form">
@@ -232,8 +233,8 @@
                             <label for="textarea" class="control-label">Bericht</label>
                             <textarea name="comment" class="form-control" rows="3"></textarea>
                         </div>
-                        
-                    
+
+
                         <button type="submit" class="btn btn-primary">Plaatsen</button>
                     </form>
                 </div>
@@ -289,7 +290,7 @@
                         success: function(data){
                             $('#grade_input').replaceWith('<a class="grade btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button">' + grade + '</a>');
                         }
-                    });   
+                    });
                 }
             })
         }
@@ -328,7 +329,7 @@
                         success: function(data){
                             $('#grade_input').replaceWith('<a class="grade btn btn-default" data-id="'+ id +'" data-grade="' + grade + '" id="grade" role="button">' + grade + '</a>');
                         }
-                    });   
+                    });
                 }
             })
         }
