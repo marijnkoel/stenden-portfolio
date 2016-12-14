@@ -40,7 +40,7 @@
             Portfolio van {{ $portfolio->user->name }} {{ $portfolio->user->infix }} {{ $portfolio->user->surname }} 
             @if($portfolioOwner)
                 <div class="btn-group pull-right">
-                    <a class="grade btn btn-default"  role="button"> {{$portfolioGrade}} </a>
+                    <a class="grade btn btn-default"  role="button"> {!! $portfolioGrade !!} </a>
                     <a class="btn btn-default" href="{{ url('modules/create') }}" role="button">Module toevoegen</a>
                     <a class="btn btn-default " href="{{ url('portfolios/' . $portfolio->id . '/edit') }}" role="button">
                         Instellingen
@@ -50,7 +50,7 @@
 
             @if($teacher)
                 <div class="btn-group pull-right">
-                    <a class="grade btn btn-default" id="portfolio-grade" data-id="{{$portfolio->id}}" data-grade="{{$portfolio->grade}}"  role="button"> {{$portfolioGrade}} </a>
+                    <a class="grade btn btn-default" id="portfolio-grade" data-id="{{$portfolio->id}}" data-grade="{{$portfolio->grade}}"  role="button"> {!! $portfolioGrade !!} </a>
                 </div>
             @endif
         </h1>  
