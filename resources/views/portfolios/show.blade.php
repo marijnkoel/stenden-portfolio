@@ -259,6 +259,7 @@
         <h3>Reacties</h3>
             @foreach($portfolio->comments as $comment)
                 <div class="comment">
+                @if($teacher)
                 {!! Form::open([
                     'method'=>'DELETE',
                     'url' => ['/comments', $comment->id],
@@ -272,6 +273,7 @@
                             'onclick'=>'return confirm("Confirm delete?")'
                     )) !!}
                 {!! Form::close() !!}
+                @endif
                 <p>
                     <strong> {{ $comment->user->name }} </strong>
                     {{ $comment->created_at }}

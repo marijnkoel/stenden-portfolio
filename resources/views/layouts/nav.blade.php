@@ -25,7 +25,6 @@
                   <li><a href="{{ url('/portfolios/' . Auth::user()->portfolio->id) }}">Portfolio</a></li>
                 @endif
               @endif
-            <li><a href="{{ url('/contact') }}">Contact</a></li>
             @if (Auth::guest())
 
               <li>  <a href="{{ url('/login') }}">Login</a></li>
